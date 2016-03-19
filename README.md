@@ -34,7 +34,6 @@ How to start the Project
 
 1. Download the project, and, inside file 'begin_analysis.r', set you *working directory*
 2. Compile the file `begin_analysis.r`.
-3. Run the R script `begin_analysis.r`.
 
 
 Outputs generated
