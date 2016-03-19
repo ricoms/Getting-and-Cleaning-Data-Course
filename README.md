@@ -2,9 +2,6 @@ Project for Getting and Cleaning Data Course
 =====================================
 Author: Ricardo Savii (https://github.com/ricoms)
 
-Edited and personalized from: Benjamin Chan (https://github.com/benjamin-chan/GettingAndCleaningData)
-
-
 Proposed problem
 --------------------------
 
