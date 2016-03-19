@@ -23,7 +23,7 @@ Get the data
 
 Download the file. Put it in the `Data` folder. 
 
-```{r downloading file, eval = FALSE}
+```{r downloading file}
 url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 f <- "Dataset.zip"
 if (!file.exists(path)) {dir.create(path)}
@@ -32,7 +32,7 @@ download.file(url, file.path(path, f))
 
 Unzip the file.
 
-```{r unzip it, eval = FALSE}
+```{r unzip it}
 unzip(f)
 ```
 
@@ -57,20 +57,26 @@ dtSubjectTrain <- fileToDataTable(file.path(pathIn, "train", "subject_train.txt"
 dtSubjectTest  <- fileToDataTable(file.path(pathIn, "test" , "subject_test.txt" ))
 ```
 
-Read the activity files (called *label* files in the `README.txt` documentation).
+Read the label files.
 
 ```{r read label files}
 dtActivityTrain <- fileToDataTable(file.path(pathIn, "train", "y_train.txt"))
 dtActivityTest  <- fileToDataTable(file.path(pathIn, "test" , "y_test.txt" ))
 ```
 
-Read the data files with `read.table`, then convert the resulting data frame to a data table. Return the data table.
+Read the data files.
 
-```{r fileToDataTable}
+```{r read data files}
 dtTrain <- fileToDataTable(file.path(pathIn, "train", "X_train.txt"))
 dtTest  <- fileToDataTable(file.path(pathIn, "test" , "X_test.txt" ))
 ```
 
+Read the key files.
+
+```{r read key files}
+dtFeatures <- fileToDataTable(file.path(pathIn, "features.txt"))
+dtActivityNames <- fileToDataTable(file.path(pathIn, "activity_labels.txt"))
+```
 
 1. Merge the training and the test sets
 ------------------------------------
@@ -100,12 +106,11 @@ setkey(dt, subject, activityNum)
 
 
 2. Extract only the mean and standard deviation
---------------------------------------------
+-----------------------------------------------
 
 Read the `features.txt` file. This tells which variables in `dt` are measurements for the mean and standard deviation.
 
 ```{r reading features.txt}
-dtFeatures <- fread(file.path(pathIn, "features.txt"))
 setnames(dtFeatures, names(dtFeatures), c("featureNum", "featureName"))
 ```
 
@@ -134,16 +139,15 @@ dt <- dt[, select, with=FALSE]
 3. Use descriptive activity names
 ---------------------------------
 
-Read `activity_labels.txt` file. This will be used to add descriptive names to the activities.
+Use the `activity_labels.txt` file. This will be used to add descriptive names to the activities.
 
 ```{r reading label files}
-dtActivityNames <- fileToDataTable(file.path(pathIn, "activity_labels.txt"))
 setnames(dtActivityNames, names(dtActivityNames), c("activityNum", "activityName"))
 ```
 
 
-4. Label with descriptive activity names
-----------------------------------------
+4. Appropriately labels the data set with descriptive variable names.
+---------------------------------------------------------------------
 
 Merge activity labels.
 
@@ -177,7 +181,7 @@ dt$activity <- factor(dt$activityName)
 dt$feature <- factor(dt$featureName)
 ```
 
-Seperate features from `featureName` using the helper function `grepthis`.
+Separate features from `featureName` using the helper function `grepthis`.
 
 ```{r grepthis}
 grepthis <- function (regex) {
