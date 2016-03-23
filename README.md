@@ -35,6 +35,8 @@ How to start the Project
 
 Outputs generated
 ----------------
-* New tidy dataset `TidyHumanActivity.txt` (added via upload, but you can generate it through the main_analysis.Rmd file)
-* Codebook file `codebook.md` and `codebook.html` (added via upload, but you can generate it through the main_analysis.Rmd file)
+* New tidy dataset `TidyHumanActivity.txt`
+* Codebook file `codebook.md` and `codebook.html`
 * Run analysis file `analysis.md` and `analysis.html`
+
+I added these files via upload, but you can generate them sourcing the `begin_analysis.r`
